@@ -24,8 +24,7 @@ def QueryFromRDS():
     for x in result:
         converted_Username = str(x[0])
         converted_Tweet = str(x[1])
-        converted_Likes = str(x[2])
-        Record = 'Username: ' + converted_Username + '\n Tweet: ' + converted_Tweet + '\n Likes: ' + converted_Likes + '\n \n'
+        Record = 'Username: ' + converted_Username + '\n Tweet: ' + converted_Tweet + '\n \n'
         MasterString = MasterString + Record
         
      #Publishes the SQL query to the SNS Topic   
