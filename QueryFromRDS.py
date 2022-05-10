@@ -17,10 +17,9 @@ connection = pymysql.connect(host=endpoint, user=username, passwd=password, db=d
 sns_client = boto3.client('sns')
 
 
-def lambda_function():
+def QueryFromRDS():
     cursor = connection.cursor()
-    #cursor.execute("SELECT Username, Tweet, LikeCount FROM AllTweets INNER JOIN Users ON AllTweets.AuthorID = Users.ID ORDER BY LikeCount DESC LIMIT 10")
-    cursor.execute("SELECT Username, Tweet, LikeCount FROM AllTweets INNER JOIN Users ON AllTweets.AuthorID = Users.ID WHERE LikeCount>11 ORDER BY LikeCount DESC LIMIT 10")
+    cursor.execute("SELECT Username, Tweet, LikeCount FROM AllTweets INNER JOIN Users ON AllTweets.AuthorID = Users.ID ORDER BY LikeCount DESC LIMIT 10")
     result = cursor.fetchall()
     MasterString = ''
     for x in result:
@@ -31,18 +30,19 @@ def lambda_function():
         print (Record)
         MasterString = MasterString + Record
         
+     #Publishes the SQL query to the SNS Topic   
     sns_client.publish(TopicArn = os.environ['SNS_Topic'], Message = MasterString, Subject = 'Tweets About My Stocks')
 
     #Deletes all Tweets from the day from the Tweets table
-    #cursor1 = connection.cursor()
-    #cursor1.execute("DELETE FROM AllTweets")
-    #connection.commit()
+    cursor1 = connection.cursor()
+    cursor1.execute("DELETE FROM AllTweets")
+    connection.commit()
 
     #Deletes all Users from the day from the Users table
-    #cursor2 = connection.cursor()
-    #cursor2.execute("DELETE FROM Users")
-    #connection.commit()
+    cursor2 = connection.cursor()
+    cursor2.execute("DELETE FROM Users")
+    connection.commit()
 
 def lambda_handler(event, context):
-    lambda_function()
+    QueryFromRDS()
     
