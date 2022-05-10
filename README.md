@@ -39,4 +39,5 @@ SNS is a Amazon's Pub/Sub service. Applications publish (send the data) to an SN
 
 **Step 9: Subscribing via Email to the SNS Topic**
 I set up my personal email address to subscribe to the SNS Topic. Since my AWS Lambda Function publishes to the SNS Topic once per day, I will receive a single email at the end of the day that contains the 10 most liked tweets from the day about the stocks I am interested in
+![image](https://user-images.githubusercontent.com/53916435/167733232-75ed6e89-a0e5-4f19-8973-9b0cb148d05b.png)
 
