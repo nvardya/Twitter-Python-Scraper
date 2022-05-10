@@ -16,7 +16,6 @@ connection = pymysql.connect(host=endpoint, user=username, passwd=password, db=d
 #Boto3 is used to connect to the SNS Topic
 sns_client = boto3.client('sns')
 
-
 def QueryFromRDS():
     cursor = connection.cursor()
     cursor.execute("SELECT Username, Tweet, LikeCount FROM AllTweets INNER JOIN Users ON AllTweets.AuthorID = Users.ID ORDER BY LikeCount DESC LIMIT 10")
@@ -27,7 +26,6 @@ def QueryFromRDS():
         converted_Tweet = str(x[1])
         converted_Likes = str(x[2])
         Record = 'Username: ' + converted_Username + '\n Tweet: ' + converted_Tweet + '\n Likes: ' + converted_Likes + '\n \n'
-        print (Record)
         MasterString = MasterString + Record
         
      #Publishes the SQL query to the SNS Topic   
