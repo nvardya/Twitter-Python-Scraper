@@ -51,7 +51,7 @@ def connect_to_endpoint(url, params):
     return response.json()
 
 
-def main():
+def ScrapeFromTwitter():
     #Making the GET call to the Twitter API endpoint
     json_response = connect_to_endpoint(search_url, query_params)
     z = json.dumps(json_response, indent=4, sort_keys=True)
@@ -91,5 +91,5 @@ def main():
 
     
 def Handler(event, context):
-    main()
+    ScrapeFromTwitter()
     
