@@ -31,8 +31,6 @@ query_params = {'query': '(#TSLA -is:retweet is:verified) OR (#ABNB -is:retweet 
                 'max_results': 10, 'expansions': 'author_id',
                 'user.fields': 'name,username'}
 
-
-
 def bearer_oauth(r):
     """
     Method required by bearer token authentication.
@@ -42,14 +40,12 @@ def bearer_oauth(r):
     r.headers["User-Agent"] = "v2RecentTweetCountsPython"
     return r
 
-
 def connect_to_endpoint(url, params):
     response = requests.request("GET", search_url, auth=bearer_oauth, params=params)
     print(response.status_code)
     if response.status_code != 200:
         raise Exception(response.status_code, response.text)
     return response.json()
-
 
 def ScrapeFromTwitter():
     #Making the GET call to the Twitter API endpoint
@@ -86,9 +82,7 @@ def ScrapeFromTwitter():
         sql2 = "INSERT INTO Users (ID, Name, Username) VALUES (%s, %s, %s)"
         val2 = (author_id, name, username)
         cursor2.execute(sql2, val2)
-        connection.commit()
-    print(z)     
-
+        connection.commit()  
     
 def Handler(event, context):
     ScrapeFromTwitter()
